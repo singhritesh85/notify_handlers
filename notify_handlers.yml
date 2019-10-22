@@ -1,0 +1,22 @@
+---
+- name: notify_handlers.yml
+  hosts: all
+  tasks: 
+  - name: install apache2
+    apt:
+      name: apache2      
+      state: present
+      force_apt_get: yes
+    notify: 
+    - start service
+
+  - name: configure apache2
+    copy:
+      content: "<p>Hi Ritesh Kumar Singh!!!</p>"
+      dest: /var/www/html/index.html
+
+  handlers:
+  - name: start service
+    service:
+      name: apache2
+      state: started
